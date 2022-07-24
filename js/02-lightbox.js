@@ -4,16 +4,18 @@ import { galleryItems } from './gallery-items.js';
 console.log(galleryItems);
 
 const galleryList = document.querySelector('.gallery');
-// добавляємо в розмітку
+
+// добавляємо днамічно  елменти масиву в розмітку
+
 const list = galleryItems.map(
-  g =>
+  img =>
     `
-    <a class="gallery__item" href=${g.original}>
+    <a class="gallery__item" href=${img.original}>
       <img
         class="gallery__image"
-        src=${g.preview}
-        title = ${g.description}
-        alt=${g.description}
+        src=${img.preview}
+        title = ${img.description}
+        alt=${img.description}
       />
     </a>
   `
