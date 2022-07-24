@@ -3,7 +3,7 @@ import { galleryItems } from './gallery-items.js';
 
 // console.log(galleryItems);
 const galleryList = document.querySelector('.gallery');
-
+// Добавляємо в розмітку
 const list = galleryItems.map(
   g =>
     `
@@ -21,6 +21,7 @@ const list = galleryItems.map(
 );
 galleryList.insertAdjacentHTML('afterbegin', list.join(''));
 
+// відкриття-закриття  картинку по кліку
 galleryList.addEventListener('click', itemsShow);
 
 function itemsShow(e) {
@@ -29,15 +30,18 @@ function itemsShow(e) {
     return;
   }
 
-  const soursData = e.target.getAttribute('data-source');
-
-  // // Через querySelector - null
-  // const soursData = e.target.querySelector('data-source');
-  // console.log(srcData);
+  const soursDataImg = e.target.getAttribute('data-source');
 
   const instance = basicLightbox.create(`
-      <img src=${soursData} >
+      <img src=${soursDataImg} >
   `);
 
   instance.show();
+
+  // Закриття по Esc
+  galleryList.addEventListener('keydown', e => {
+    if (e.code === 'Escape') {
+      instance.close();
+    }
+  });
 }
