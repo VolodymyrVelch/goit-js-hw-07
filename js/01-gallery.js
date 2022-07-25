@@ -25,27 +25,28 @@ galleryList.insertAdjacentHTML('afterbegin', list.join(''));
 
 // відкриття-закриття  картинки по кліку
 
-galleryList.addEventListener('click', itemsShow);
+galleryList.addEventListener('click', onModalShow);
 
-function itemsShow(e) {
+function onModalShow(e) {
   e.preventDefault();
+
   if (e.target.nodeName !== 'IMG') {
     return;
   }
 
-  const soursDataImg = e.target.getAttribute('data-source');
-
-  const instance = basicLightbox.create(`
-      <img src=${soursDataImg} >
-  `);
-
-  instance.show();
-
-  // Закриття по Esc
-
-  galleryList.addEventListener('keydown', e => {
+  const instance = basicLightbox.create(`<img src=${e.target.dataset.source} >`, {
+    onShow: instance => {
+      window.addEventListener('keydown', onEsc);
+    },
+    onClose: instance => {
+      window.removeEventListener('keydown', onEsc);
+    },
+  });
+  function onEsc(e) {
     if (e.code === 'Escape') {
+      console.log(e.code);
       instance.close();
     }
-  });
+  }
+  instance.show();
 }
